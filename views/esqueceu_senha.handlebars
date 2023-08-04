@@ -1,0 +1,134 @@
+<head>
+  <title>Alteração de senha</title>
+  <script defer src="/js/login_validacao.js"></script>
+</head>
+<main>
+  {{#if error}}
+    <div class="container mt-5">
+      <div class="row justify-content-center text-center">
+        <div class="alert alert-danger w-50">{{error}}</div>
+      </div>
+    </div>
+  {{/if}}
+  <div class="container w-50" style="margin-top: 50px">
+    <div class="row justify-content-center mb-5">
+      <div class="col-md-12 col-sm-12 col-lg-12">
+        <div class="card border border-secondary shadow">
+          <div class="card-body">
+            <div class="text-center">
+              <img
+                src="/img/logo_tcc.png"
+                alt="logo aqui"
+                width="160px"
+                height="160px"
+              />
+            </div>
+            <h2 class="text-center text-dark mb-4">Alteração de senha</h2>
+            <form
+              action="/esqueci-senha"
+              method="POST"
+              class="needs-validation"
+              novalidate
+            >
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite sua matrícula</label>
+
+                  <div class="form-floating mb-4">
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="matricula"
+                      placeholder="user"
+                      name="matricula"
+                      value="{{dados.matricula}}"
+                      maxlength="150"
+                      required
+                    />
+                    <label for="floatingInput">Digite sua matrícula</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite sua matricula
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Digite sua nova senha</label>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="floatingPassword"
+                      placeholder="Password"
+                      name="senha"
+                      maxlength="40"
+                      value="{{dados.senha}}"
+                      required
+                    />
+                    <label for="floatingPassword">Digite sua nova senha</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, digite sua senha
+                    </div>
+                    <div id="error-password"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <label
+                    class="form-label"
+                    for="floatingInput"
+                    style="font-weight: bold"
+                  >Repita sua senha</label>
+                  <div class="form-floating mb-4">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="floatingPassword"
+                      placeholder="Password"
+                      name="senha2"
+                      maxlength="40"
+                      value="{{dados.senha2}}"
+                      required
+                    />
+                    <label for="floatingPassword">Repita sua senha</label>
+                    <div class="valid-feedback">Validado!</div>
+                    <div class="invalid-feedback">
+                      Por favor, repita sua senha
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12 col-lg-12 col-sm-12">
+                  <button class="btn btn-outline-primary" type="submit">
+                    Cadastrar nova senha
+                  </button>
+                  <a href="/"><button
+                      type="button"
+                      class="btn btn-outline-primary"
+                    >
+                      Voltar
+                    </button></a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{{> _footer}}

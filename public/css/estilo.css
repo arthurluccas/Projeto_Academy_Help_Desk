@@ -1,0 +1,259 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+#img-hover {
+  height: 40px;
+  width: 40px;
+  background-image: url("../img/lista-de-reproducao.png");
+  background-size: cover;
+  transition: 0.5s;
+}
+#img-hover:hover {
+  background-image: url("../img/lista.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.funcionarios-img {
+  width: 64px;
+  height: 64px;
+  display: inline-block;
+  background-image: url("../img/carteira-de-identidade.png");
+  background-size: cover;
+  transition: 1s;
+}
+.chamados-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/conferencia.png");
+  background-size: cover;
+  transition: 1s;
+}
+.professores-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/professor.png");
+  background-size: cover;
+  transition: 1s;
+}
+.alunos-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/aluna.png");
+  background-size: cover;
+  transition: 1s;
+}
+.facebook-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/facebook.png");
+  background-size: cover;
+  transition: 1s;
+}
+.twitter-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/twitter.png");
+  background-size: cover;
+  transition: 1s;
+}
+.instagram-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/instagram.png");
+  background-size: cover;
+  transition: 1s;
+}
+.linkedin-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/linkedin.png");
+  background-size: cover;
+  transition: 1s;
+}
+.github-img {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/github.png");
+  background-size: cover;
+  transition: 1s;
+}
+.relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/documents.png");
+  background-size: cover;
+  transition: 1s;
+}
+.chat-img {
+  width: 63.19px;
+  height: 63.19px;
+  display: inline-block;
+  background-image: url("../img/headset.png");
+  background-size: cover;
+  transition: 1s;
+}
+
+.card-hover:hover > .funcionarios-img {
+  width: 64px;
+  height: 64px;
+  background-image: url("../img/cracha.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .chamados-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/suporte-tecnico.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .professores-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/maca.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .alunos-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/livro.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .relatorios-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/documento.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover > .chat-img {
+  width: 63.19px;
+  height: 63.19px;
+  background-image: url("../img/support.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.facebook-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/facebook.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.twitter-img:hover {
+  width: 85px;
+  height: 85px;
+  display: inline-block;
+  background-image: url("../img/twitter.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.instagram-img:hover {
+  width: 85px;
+  height: 85px;
+  display: inline-block;
+  background-image: url("../img/instagram.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.linkedin-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/linkedin.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.github-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/github.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.chat-img:hover {
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  background-image: url("../img/support.gif");
+  background-size: cover;
+  transition: 1s;
+}
+.card-hover:hover {
+  box-shadow: 20px 20px 10px rgba(0, 0, 0, 0.15);
+  transition: 1s;
+}
+.card-hover {
+  transition: 1.5s;
+}
+#card-border:hover {
+  border-color: #0dcaf0;
+  transition: 1s;
+}
+#card-border {
+  border-color: #6c757d;
+  transition: 1s;
+}
+
+@media (max-width: 768px) {
+  .botao {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+
+  .nivel {
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .notebook-professor {
+    margin-top: 20px !important;
+  }
+}
+.background-img-usuarios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80vh !important;
+  width: 100%;
+  overflow: hidden;
+  background-image: url("../img/imagem_fundo.jpeg");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.background-img-funcionarios {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100% !important;
+  width: 100%;
+  overflow: hidden;
+  background-image: url("../img/logo_tcc1.png");
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
+}

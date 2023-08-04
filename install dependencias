@@ -1,0 +1,3 @@
+ npm install --save body-parser connect-flash cors express express-handlebars express-session multer mysql2 passport passport-local socket.io
+
+  npm install --save-dev nodemon

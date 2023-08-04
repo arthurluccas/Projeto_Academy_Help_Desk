@@ -1,0 +1,258 @@
+<head>
+  <title>Lista de relatórios</title>
+  <script defer src="/js/foto_perfil.js"></script>
+</head>
+<header
+  class="shadow fixed-top"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-lg-1">
+        <a href="/admin" class="text-decoration-none text-white">
+          <img
+            class="img-fluid float-start"
+            src="/img/logo_tcc.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-6 col-lg-4">
+        <a href="/admin" class="text-white text-decoration-none d-inline-block">
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-4">
+        <form
+          action="/admin/relatorio/foto"
+          method="post"
+          enctype="multipart/form-data"
+          id="form_perfil"
+        >
+          {{#if foto}}
+            <img
+              src="/upload/admin/{{foto}}"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+            <div class="text-center mt-3">
+              <a
+                href="/admin/relatorio/foto/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
+          {{else}}
+            <img
+              src="\img\do-utilizador.png"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+          {{/if}}
+          <input
+            class="form-control"
+            type="file"
+            name="admin_foto"
+            accept="image/*"
+            maxlength="150"
+            id="input_perfil"
+            hidden
+          />
+        </form>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a href="/admin" class="btn btn-outline-dark" type="button">Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/funcionario"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de funcionários</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a href="/admin/relatorio" class="btn btn-outline-dark" type="button">Lista de
+            relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/cadastrar-professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/admin/cadastrar-funcionario"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de funcionários</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a 
+          href="/admin/chat" 
+          class="btn btn-outline-dark" 
+          type="button">
+          Chat
+          </a>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="d-grid gap-2">
+          <a href="/admin/logout" class="btn btn-outline-danger" type="button">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main style="margin-top: 150px;">
+    {{> _msg}}
+  {{#if error_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-danger w-50">{{error_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+{{#if aviso_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-warning w-50">{{aviso_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+{{#each relatorio}}
+    <div class="container w-50 mt-5 mb-5">
+        <div class="card shadow">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 col-lg-12">
+                        <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapseExample{{this.id}}" role="button" aria-expanded="false" aria-controls="collapseExample"><h5 class="card-title m-0 p-2">{{this.titulo}}</h5></a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body collapse" id="collapseExample{{this.id}}">              
+                    <label for="conteudo" class="form-label" style="font-size: 13pt;">Relatório:</label>
+                    <textarea class="form-control" id="conteudo" rows="200" style="height: 220px;" disabled readonly>{{this.conteudo}}</textarea>
+                    <p>Criado por: {{this.nome_funcionario}}</p>
+                    <a href="/admin/relatorio/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+                    <a data-bs-toggle="modal" data-bs-target="#deletar_relatorio{{this.id}}" class="btn btn-danger">Deletar</a>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
+    <div class="modal fade" id="deletar_relatorio{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="margin-left: 200px;" id="exampleModalLabel">AVISO</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body text-center">
+          <p class="align-middle d-inline">Certeza que deseja excluir um relatório do usuário {{this.nome_funcionario}}?</p>
+        </div>
+        <div class="modal-footer">
+          <div style="margin-right: 100px;">
+          <button type="button" id="botao_fechar" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+          <a href="/admin/relatorio/exclusao/{{this.id}}"><button type="button" class="btn btn-danger">Deletar mesmo assim</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}
+</main>
+{{> _footer}}

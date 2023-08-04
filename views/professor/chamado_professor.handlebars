@@ -1,0 +1,300 @@
+<head>
+  <title>Chamado</title>
+  <script defer src="/js/foto_perfil.js"></script>
+  <script defer src="/js/layout_chatbot.js"></script>
+  <script src="https://cdn.botpress.cloud/webchat/v0/inject.js"></script>
+<script src="https://mediafiles.botpress.cloud/434f6ee6-01c1-45de-9836-18ce2d956e70/webchat/config.js" defer></script>
+</head>
+<header
+  id="header-chatbot"
+  class="shadow fixed-top"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+        z-index: 1;
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-lg-1">
+        <a href="/professor" class="text-decoration-none text-white">
+          <img
+            class="img-fluid float-start"
+            src="/img/logo_tcc.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-6 col-lg-4">
+        <a
+          href="/professor"
+          class="text-white text-decoration-none d-inline-block"
+        >
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        id="fechar-botao"
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-4">
+        <form
+          action="/professor/chamado/foto"
+          method="post"
+          enctype="multipart/form-data"
+          id="form_perfil"
+        >
+          {{#if foto}}
+            <img
+              src="/upload/professor/{{foto}}"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+            <div class="text-center mt-3">
+              <a
+                href="/professor/chamado/foto/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
+          {{else}}
+            <img
+              src="\img\do-utilizador.png"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+          {{/if}}
+          <input
+            class="form-control"
+            type="file"
+            name="professor_foto"
+            accept="image/*"
+            maxlength="150"
+            id="input_perfil"
+            hidden
+          />
+        </form>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/professor/criar-chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a 
+          href="/professor/chat" 
+          class="btn btn-outline-dark" 
+          type="button">
+          Atendimento
+          </a>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="d-grid gap-2">
+          <a href="/professor/logout" class="btn btn-outline-danger" type="button">Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main style="margin-top: 150px;">
+{{> _msg}}
+{{#if error_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-danger w-50">{{error_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+{{#if aviso_mensagem}}
+  <div class="container mt-5">
+    <div class="row justify-content-center text-center">
+      <div class="alert alert-warning w-50">{{aviso_mensagem}}</div>
+    </div>
+  </div>
+{{/if}}
+  {{#each chamado_professor}}
+  <div class="container w-50 mt-5 mb-5">
+  <div class="card shadow">
+  <div class="card-header h-0">
+    <div class="row">
+      <div class="col-sm-12 col-md-1 col-lg-1">
+        {{#if this.i1}}
+        <div class="rounded-circle bg-success mt-1" style="width: 20px; height: 20px;"></div>
+        {{/if}}
+        {{#if this.i2}}
+        <div class="rounded-circle bg-warning mt-1" style="width: 20px; height: 20px;"></div>
+        {{/if}}
+        {{#if this.i3}}
+        <div class="rounded-circle bg-danger mt-1" style="width: 20px; height: 20px;"></div>
+        {{/if}}
+      </div>
+      <div class="col-sm-12 col-md-11 col-lg-11 p-0">
+        <p class="mb-0 me-2 fs-6">{{this.statusd}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <a class="text-decoration-none text-dark" data-bs-toggle="collapse" href="#collapse{{this.id}}" role="button" aria-expanded="false" aria-controls="collapse"><h5 class="card-title">{{this.titulo}}</h5></a>
+    <div class="collapse" id="collapse{{this.id}}">
+    <p class="card-text">{{this.assunto}}</p>
+    <p class="card-text mb-0">Nível: {{this.nivel}}</p>
+    <p class="card-text mb-3">Prioridade: {{this.prioridade}}</p>
+    <p class="card-text fw-bold">ENTRE EM CONTATO</p>
+    <p class="card-text mb-0">Usuário do cliente: {{this.nome_professor}}</p>
+    <p class="card-text mb-0">Email do cliente: {{this.email_professor}}</p>
+    {{#if residencial_professor}}
+    <p class="card-text mb-0">Telefone celular do cliente: {{this.celular_professor}}</p>
+    <p class="card-text">Telefone residencial do cliente: {{this.residencial_professor}}</p>
+    {{else}}
+    <p class="card-text">Telefone celular do cliente: {{this.celular_professor}}</p>
+    {{/if}}
+    {{#if this.img1}}
+    <p class="card-text mb-0">Imagens:</p>
+    <div class="row">
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem1_professor{{this.id}}" src="/upload/chamado_professor/{{this.img1}}" alt="algo deu errado">
+    {{#if this.img2}}
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem2_professor{{this.id}}" src="/upload/chamado_professor/{{this.img2}}" alt="algo deu errado">
+    {{/if}}
+    {{#if this.img3}}
+    <img class="btn img-fluid rounded float-start h-25 w-25" data-bs-toggle="modal" data-bs-target="#imagem3_professor{{this.id}}" src="/upload/chamado_professor/{{this.img3}}" alt="algo deu errado">
+    {{/if}}
+    </div>
+    {{/if}}
+    <label for="descricao" class="form-label">Descrição</label>
+    <textarea class="form-control mb-3" id="descricao" rows="10" disabled readonly>{{this.descricao}}</textarea>
+    <a href="/professor/chamado/alteracao/{{this.id}}" class="btn btn-warning">Alterar</a>
+    <a href="/professor/chamado/exclusao/{{this.id}}" class="btn btn-danger">Deletar</a>
+    </div>
+    </div>
+  </div>
+  </div>
+  <!-- Modal_Professor -->
+<div class="modal fade" id="imagem1_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img1}}" alt="error" width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal_Professor -->
+<div class="modal fade" id="imagem2_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img2}}" alt="error"  width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal_Professor -->
+<div class="modal fade" id="imagem3_professor{{this.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-end mb-2">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="text-center">
+        <img src="/upload/chamado_professor/{{this.img3}}" alt="error" width="100%">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {{/each}}
+</main>
+{{> _footer}}

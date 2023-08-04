@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat em Node.js</title>
+   <!-- <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      
+      h1 {
+        text-align: center;
+      }
+      
+      .chat-container {
+        display: flex;
+        height: 100vh;
+      }
+      
+      .chat-sidebar {
+        flex: 1;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      
+      .chat-messages {
+        flex: 3;
+        padding: 20px;
+        background-color: #fff;
+        overflow-y: auto;
+      }
+      
+      .chat-input {
+        flex: 1;
+        padding: 20px;
+        border-top: 1px solid #e1e1e1;
+      }
+      
+      input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #e1e1e1;
+        border-radius: 4px;
+      }
+      
+      button {
+        padding: 10px 20px;
+        margin-left: 10px;
+        border: none;
+        border-radius: 4px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      li {
+        margin-bottom: 5px;
+      }
+    </style>-->
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .chat-container {
+    display: flex;
+    height: 90vh;
+  }
+  
+  .chat-sidebar {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    
+  }
+  
+  .chat-messages {
+    flex: 5;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+
+  }
+  
+  .chat-input {
+    flex: 2;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: end;
+  }
+  
+  .chat-input input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .chat-input button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
+    <script>
+      const socket = io();
+
+      // Função para entrar em um chat
+      function joinChat(chatId) {
+        // Envia o evento de entrada no chat para o servidor
+        socket.emit('join', chatId);
+
+        // Limpa as mensagens do chat anterior
+        document.getElementById('messages').innerHTML = '';
+
+        // Exibe o chat atual
+        document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
+      }
+
+      // Função para enviar uma mensagem
+      function sendMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value;
+        messageInput.value = '';
+
+        // Envia a mensagem para o servidor
+        const chatId = document.getElementById('currentRoom').textContent.split(' ')[2];
+        socket.emit('message', message, chatId);
+      }
+
+      socket.on('message', (data) => {
+        // Exibe a mensagem recebida na interface do usuário
+        const messageElement = document.createElement('p');
+        messageElement.textContent = `${data.user}: ${data.message}`;
+        document.getElementById('messages').appendChild(messageElement);
+      });
+
+      socket.on('chatMessages', (messages) => {
+        // Exibe as mensagens existentes no chat ao entrar
+        messages.forEach((message) => {
+          const messageElement = document.createElement('p');
+          messageElement.textContent = `${message.user}: ${message.message}`;
+          document.getElementById('messages').appendChild(messageElement);
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Chat em Node.js</h1>
+    <div class="chat-container">
+      <div class="chat-sidebar">
+        <h3>Selecione um chat:</h3>
+        <ul>
+          <li><button onclick="joinChat('chat1')">Chat 1</button></li>
+          <li><button onclick="joinChat('chat2')">Chat 2</button></li>
+          <li><button onclick="joinChat('chat3')">Chat 3</button></li>
+        </ul>
+      </div>
+      <div class="chat-messages" id="messages"></div>
+      <div class="chat-input">
+        <p id="currentRoom"></p>
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem">
+        <button onclick="sendMessage()">Enviar</button>
+      </div>
+    </div>
+  </body>
+</html>

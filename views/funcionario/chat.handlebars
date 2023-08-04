@@ -1,0 +1,627 @@
+<head>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+    <script defer src="/js/foto_perfil.js"></script>
+    <title>Chat</title>
+   <!-- <style>
+      main { margin: 0; padding-bottom: 3rem; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+
+      #form { background: rgba(0, 0, 0, 0.15); padding: 0.25rem; position: fixed; bottom: 0; left: 0; right: 0; display: flex; height: 3rem; box-sizing: border-box; backdrop-filter: blur(10px); }
+      #input { border: none; padding: 0 1rem; flex-grow: 1; border-radius: 2rem; margin: 0.25rem; }
+      #input:focus { outline: none; }
+      #form > button { background: #333; border: none; padding: 0 1rem; margin: 0.25rem; border-radius: 3px; outline: none; color: #fff; }
+
+      #messages { list-style-type: none; margin: 0; padding: 0; }
+      #messages > li { padding: 0.5rem 1rem; }
+      #messages > li:nth-child(odd) { background: #efefef; }
+    </style>-->
+
+    <style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: block;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 10px 0;
+  }
+  h3{
+    margin-top: 30px;
+  }
+
+  .chat-container {
+    display: flex;
+    height: 90vh;
+  }
+  
+  .chat-sidebar {
+    flex: 0,7;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    height: 90vh;
+    padding-right: 20px;
+    margin-top: 80px;  
+  }
+  
+  .chat-messages {
+    flex: 5;
+    padding: 20px;
+    background-color: #fff;
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    padding-top: 40px;
+    height: 78vh;
+    margin-top: 80px;
+  }
+  .chat{
+    flex: 2;
+    
+    
+  }
+  .chat-input {
+    flex: 2;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: end;
+  }
+  
+  .chat-input input[type="text"] {
+    flex: 1;
+    padding: 14px;
+    border: none;
+    border-radius: 4px;
+    width: 84%;
+    display: inline-block;
+  }
+  
+  .chat-input button {
+    padding: 10px 20px;
+    margin-left: 10px;
+    /*background-color: #4CAF50;*/
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex:2;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 10px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    /*background-color: #4CAF50;
+    color: #fff;
+    border: none;*/
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .user{
+    font-weight: bold;
+    
+  }
+  .message {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0%;
+  justify-content: flex-end;
+  border-radius : 20px ;
+  border: block;
+  background-color: rgb(252, 252, 252);
+  padding: 10px;
+}
+
+.message-left {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.message-right {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  
+  text-align: right;
+}
+
+.message-image-right {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  ;
+}
+
+.message-image-left {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px;
+  
+}
+
+.message-text-right {
+  margin: 0;
+  font-size: 25px;
+  text-align: right;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  margin-right: 10px;
+  border-radius: 20px 0px 20px 20px;
+}
+
+.message-text-left {
+  margin: 0;
+   font-size: 25px;
+  text-align: left;
+  background-color: #d4d9df;
+  color: #000000;
+  padding: 10px;
+  border-radius: 8px;
+  margin-left: 10 px;
+  padding: 10px;
+  border-radius: 0px 20px 20px 20px;
+}
+
+.message-balloon {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.message-balloon.sent {
+  justify-content: flex-end;
+}
+
+.message-image-right.message-balloon.sent {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+.message-text-right.message-balloon.sent {
+  background-color: #007bff;
+  color: #fff;
+}
+
+    
+@media (max-width: 1024px) {
+  .chat-input input[type="text"] {
+    width: 78%;
+  }
+  .chat-input {
+    padding: 10px;
+  }
+  .chat-sidebar {
+    margin-top: 60px;
+  }
+  .chat-messages {
+    margin-top: 60px;
+  }
+}
+  
+  </style>
+  </head>
+<header
+  class="shadow fixed-top"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-lg-1">
+        <a href="/funcionario" class="text-decoration-none text-white">
+          <img
+            class="img-fluid float-start"
+            src="/img/logo_tcc.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-6 col-lg-4">
+        <a href="/funcionario" class="text-white text-decoration-none d-inline-block">
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-4">
+        <form
+          action="/funcionario/chat/foto"
+          method="post"
+          enctype="multipart/form-data"
+          id="form_perfil"
+        >
+          {{#if foto}}
+            <img
+              src="/upload/funcionario/{{foto}}"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+            <div class="text-center mt-3">
+              <a
+                href="/funcionario/chat/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
+          {{else}}
+            <img
+              src="\img\do-utilizador.png"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+          {{/if}}
+          <input
+            class="form-control"
+            type="file"
+            name="funcionario_foto"
+            accept="image/*"
+            maxlength="150"
+            id="input_perfil"
+            hidden
+          />
+        </form>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario"
+            class="btn btn-outline-dark"
+            type="button"
+          >Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a 
+          href="/funcionario/chat" 
+          class="btn btn-outline-dark" 
+          type="button">
+          Chat
+          </a>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/logout"
+            class="btn btn-outline-danger"
+            type="button"
+          >Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main >
+    <div class="chat-container">
+      <div class="chat-sidebar">
+        <div class="user">
+          <h3 class="text-center">Selecione um chat</h3>
+          </div>
+        
+        <ul>
+          {{#each chamado}}
+          {{#if this.nome_aluno}}
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado de Aluno</div></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do aluno: {{this.nome_aluno}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          {{/if}}
+          {{#if this.nome_professor}}
+          <li class="text-left"><button class="btn btn-success" style="width: 100%;" onclick="joinChat('{{this.id}}')"><div class="user">Chamado Professor</div></br></br> Titulo: {{this.titulo}}</br> Assunto: {{this.assunto}}</br> Nome do professor: {{this.nome_professor}}</br> {{#if this.nome_funcionario}}Nome do funcionário: {{this.nome_funcionario}}{{else}}Nenhum funcionário vinculado a esse chamado{{/if}}</button></li>
+          {{/if}}
+          {{/each}}
+        </ul> 
+        
+      </div>
+     <div class="chat">
+          <div class="chat-messages" id="messages">
+            <input type="image" id="chatfoto" value="/upload/funcionario/{{foto}}" hidden/>
+             <input type="text" id="eAdmin" value="{{eAdmin}}" hidden>
+
+            
+            </div>
+            
+              <div class="chat-input" >
+                <div> 
+              <input id="currentRoom" hidden>
+              <input type="text" class="form-control input-notebook" id="messageInput" placeholder="Digite sua mensagem" onchange="sendMessage()">
+              <button class="btn btn-success" onclick="sendMessage()">
+                Enviar
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </body>
+
+<script>
+  const socket = io();
+  var chatId = (id="currentRoom");
+  var chatfotot = document.querySelector("#chatfoto").value;
+  var eAdmin = document.querySelector("#eAdmin").value;
+
+  socket.emit('foto', eAdmin, chatfotot);
+ 
+  // Função para entrar em um chat
+  function joinChat(chatId) {
+    // Envia o evento de entrada no chat para o servidor
+    socket.emit('join', chatId);
+
+    // Limpa as mensagens do chat anterior
+    document.getElementById('messages').innerHTML = '';
+
+    // Exibe o chat atual
+    document.getElementById('currentRoom').textContent = `Chat atual: ${chatId}`;
+  }
+
+  // Função para enviar uma mensagem
+  function sendMessage() {
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value;
+    messageInput.value = '';
+
+    // Envia a mensagem para o servidor
+    const chatId = document.getElementById('currentRoom').textContent.split(' ')[2];
+
+    // Verifica se o eAdmin está enviando a mensagem
+    if (eAdmin == chatId) {
+      socket.emit('message', message, chatId, eAdmin, chatfotot, true);
+    } else {
+      socket.emit('message', message, chatId, eAdmin, chatfotot, false);
+    }
+  }
+
+ socket.on('message', (data) => {
+  console.log(data)
+  // Exibe a mensagem recebida na interface do usuário
+  const listItem = document.createElement('li');
+  listItem.classList.add('message-balloon');
+
+  // Verifica se o eAdmin está recebendo a mensagem
+  if (eAdmin == data.id) {
+    listItem.classList.add('sent');
+  } else {
+    listItem.classList.add('received');
+  }
+
+  const messageElement = document.createElement('div');
+  messageElement.classList.add('message');
+//user
+//const userElement = document.createElement('div');
+//if (eAdmin == data.id) {
+    //userElement.userElement = `${data.user}`;
+    //userElement.classList.add('message-text-right');};
+    //messageElement.appendChild(userElement);
+  // Texto - Imagem
+  const imageElement = document.createElement('img');
+  const textElement = document.createElement('div');
+  
+  
+  if (eAdmin == data.id) {
+    textElement.textContent = `${data.message}`;
+    textElement.classList.add('message-text-right');
+ imageElement.src = chatfotot;
+    imageElement.classList.add('message-image-right');
+     messageElement.appendChild(textElement);
+  messageElement.appendChild(imageElement);
+  } else if (data.id == "1"){
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_admin;
+    imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  } else if (data.id == "2"){
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_professor;
+    imageElement.classList.add('message-image-left');
+     messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  } else if (data.id == "3"){
+    textElement.innerHTML = `${data.user}<br>${data.message}`;
+    textElement.classList.add('message-text-left');
+    imageElement.src = data.foto_aluno;
+    imageElement.classList.add('message-image-left');
+    messageElement.appendChild(imageElement); 
+    messageElement.appendChild(textElement);
+  }
+ 
+  
+
+  listItem.appendChild(messageElement);
+  document.getElementById('messages').appendChild(listItem);
+});
+
+socket.on('chatMessages', (messages) => {
+  // Limpa as mensagens do chat anterior
+  document.getElementById('messages').innerHTML = '';
+
+  messages.forEach((message) => {
+    const listItem = document.createElement('li');
+    listItem.classList.add('message-balloon');
+
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+
+    // Imagem
+    const imageElement = document.createElement('img');
+
+    // Texto
+    const textElement = document.createElement('div');
+    if (eAdmin == message.id) {
+      textElement.textContent = `${message.message}`;
+      textElement.classList.add('message-text-right');
+       imageElement.src = chatfotot;
+      imageElement.classList.add('message-image-right');
+       
+        messageElement.appendChild(textElement);
+        messageElement.appendChild(imageElement);
+    } else if (message.id == "1"){
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_admin;
+      imageElement.classList.add('message-image-left');
+      messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
+    } else if (message.id == "2"){
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_professor;
+      imageElement.classList.add('message-image-left');
+      messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
+    } else if (message.id == "3"){
+      textElement.innerHTML = `<div class="user">${message.user}</div>${message.message}`;
+      textElement.classList.add('message-text-left');
+      imageElement.src = message.foto_aluno;
+      imageElement.classList.add('message-image-left');
+      messageElement.appendChild(imageElement);
+      messageElement.appendChild(textElement);
+    }
+    
+    
+
+    // Verifica se o eAdmin está recebendo a mensagem
+    if (eAdmin == message.id) {
+      listItem.classList.add('sent');
+      
+    } 
+    else {
+      listItem.classList.add('received');
+    }
+    
+
+    listItem.appendChild(messageElement);
+    document.getElementById('messages').appendChild(listItem);
+  });
+});
+
+
+    </script>
+    </form>
+  </main>

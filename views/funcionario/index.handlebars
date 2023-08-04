@@ -1,0 +1,308 @@
+<head>
+  <title>Funcionário</title>
+  <script defer src="/js/foto_perfil.js"></script>
+</head>
+<header
+  class="shadow fixed-top"
+  style="
+        background: rgb(45, 111, 131);
+        background: linear-gradient(
+          90deg,
+          rgba(45, 111, 131, 1) 17%,
+          rgba(28, 46, 76, 1) 100%
+        );
+      "
+>
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-2 col-sm-1 col-lg-1">
+        <a href="/funcionario" class="text-decoration-none text-white">
+          <img
+            class="img-fluid float-start"
+            src="/img/logo_tcc.png"
+            alt="logo aqui"
+            width="90px"
+            height="90px"
+            title="logo"
+          />
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-6 col-lg-4">
+        <a
+          href="/funcionario"
+          class="text-white text-decoration-none d-inline-block"
+        >
+          <h1 class="text-start fs-2" title="academy help desk">Academy Help
+            Desk</h1>
+        </a>
+      </div>
+      <div class="col-md-5 col-sm-5 col-lg-7 text-end">
+        <a
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasScrolling"
+          aria-controls="offcanvasScrolling"
+          style="cursor: pointer; display:inline-block"
+        ><div id="img-hover" title="lista de navagação"></div></a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="offcanvas offcanvas-end shadow"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Olá,
+        {{usuario}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="row mb-4">
+        <form
+          action="/funcionario"
+          method="post"
+          enctype="multipart/form-data"
+          id="form_perfil"
+        >
+          {{#if foto}}
+            <img
+              src="/upload/funcionario/{{foto}}"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+            <div class="text-center mt-3">
+              <a
+                href="/funcionario/exclusao/{{matricula}}"
+                class="btn btn-outline-danger"
+              >Excluir</a>
+            </div>
+          {{else}}
+            <img
+              src="\img\do-utilizador.png"
+              class="rounded-circle mx-auto d-block"
+              id="foto_perfil"
+              height="100px"
+              width="100px"
+              style="cursor: pointer;"
+            />
+          {{/if}}
+          <input
+            class="form-control"
+            type="file"
+            name="funcionario_foto"
+            accept="image/*"
+            maxlength="150"
+            id="input_perfil"
+            hidden
+          />
+        </form>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario"
+            class="btn btn-outline-dark"
+            type="button"
+          >Inicio</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/chamado"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de chamados</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Lista de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Seus relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-professor"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de professores</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-aluno"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de alunos</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/cadastrar-relatorio"
+            class="btn btn-outline-dark"
+            type="button"
+          >Cadastro de relatórios</a>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="d-grid gap-2">
+          <a 
+          href="/funcionario/chat" 
+          class="btn btn-outline-dark" 
+          type="button">
+          Chat
+          </a>
+        </div>
+      </div>
+      <div class="row mt-5">
+        <div class="d-grid gap-2">
+          <a
+            href="/funcionario/logout"
+            class="btn btn-outline-danger"
+            type="button"
+          >Sair</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="background-img-funcionarios" style="margin-top: 90px;">
+  <div class="container mt-5">
+    <div class="row g-5 d-flex justify-content-center">
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/chamado"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="chamados-img"></div>
+              <p class="mt-4" style="margin: 0">Chamados</p>
+            </div>
+          </div></a>
+      </div>
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/chat"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="chat-img"></div>
+              <p class="mt-4" style="margin: 0">Chat</p>
+            </div>
+          </div></a>
+      </div>
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/cadastrar-relatorio"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="relatorios-img"></div>
+              <p class="mt-4" style="margin: 0">Criar Relatórios</p>
+            </div>
+          </div></a>
+      </div>
+    </div>
+  </div>
+  <div class="container mt-5">
+    <div class="row g-5 d-flex justify-content-center mb-5">
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/professor"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="professores-img"></div>
+              <p class="mt-4" style="margin: 0">Professores</p>
+            </div>
+          </div></a>
+      </div>
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a href="/funcionario/aluno" class="text-decoration-none text-dark"><div
+            class="card rounded"
+            id="card-border"
+          >
+            <div class="card-body text-center card-hover">
+              <div class="alunos-img"></div>
+              <p class="mt-4" style="margin: 0">Alunos</p>
+            </div>
+          </div></a>
+      </div>
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/relatorio"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="relatorios-img"></div>
+              <p class="mt-4" style="margin: 0">Seus relatórios</p>
+            </div>
+          </div></a>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row g-5 d-flex justify-content-center mb-5">
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/cadastrar-professor"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="professores-img"></div>
+              <p class="mt-4" style="margin: 0">Cadastrar professores</p>
+            </div>
+          </div></a>
+      </div>
+      <div class="col-md-4 col-lg-4" style="width: 15rem">
+        <a
+          href="/funcionario/cadastrar-aluno"
+          class="text-decoration-none text-dark"
+        ><div class="card rounded" id="card-border">
+            <div class="card-body text-center card-hover">
+              <div class="alunos-img"></div>
+              <p class="mt-4" style="margin: 0">Cadastrar Alunos</p>
+            </div>
+          </div></a>
+      </div>
+    </div>
+  </div>
+</main>
+{{> _footer}}
